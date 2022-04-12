@@ -4,10 +4,15 @@ console.log(data)
 function App() {
   const [productList, setProduct] = React.useState(data)
   const [basketList, setBasketList] = React.useState([])
+  const [totalPrice, setTotalPrice] = React.useState(0)
+
 
   const addToBasket = (i) => {
     setBasketList([...basketList, productList[i]])
+    console.log(basketList)
+    setTotalPrice(totalPrice + +productList[i].price)
   }
+
 
 
   return (
@@ -23,11 +28,11 @@ function App() {
       <div className="basket">
         <div className="total">
           <span>Итого:</span>
-          <span>0 c</span>
+          <span>{totalPrice} c</span>
         </div>
         <div>
         {basketList.map(item => (
-          <button className="product" >
+          <button className="product" key={item.id}>
             <div>{item.title}</div>
             <div>{item.price}c</div>
           </button>
