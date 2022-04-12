@@ -1,5 +1,3 @@
-console.log(data)
-
 
 function App() {
   const [productList, setProduct] = React.useState(data)
@@ -9,17 +7,22 @@ function App() {
 
   const addToBasket = (i) => {
     setBasketList([...basketList, productList[i]])
-    console.log(basketList)
     setTotalPrice(totalPrice + +productList[i].price)
+    
   }
 
-
-
+  const removeItem = (item, i) => {
+    setBasketList(basketList.splice(i, 1))
+    setTotalPrice(totalPrice - +item.price)
+    setBasketList([...basketList])
+  }
+  
+  
   return (
     <div className="App">
       <div className="product-list">
         {data.map((product, i) => (
-          <button onClick={() => addToBasket(i)} key={product.id} className="product" >
+          <button onClick={() => addToBasket(i)} key={i} className="product" >
             <div>{product.title}</div>
             <div>{product.price}c</div>
           </button>
@@ -31,8 +34,8 @@ function App() {
           <span>{totalPrice} c</span>
         </div>
         <div>
-        {basketList.map(item => (
-          <button className="product" key={item.id}>
+        {basketList.map((item, i) => (
+          <button onClick={() => (removeItem(item, i))} className="product" key={i}>
             <div>{item.title}</div>
             <div>{item.price}c</div>
           </button>
